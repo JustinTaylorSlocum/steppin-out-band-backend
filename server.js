@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+var cors = require('cors');
 
 // Routers
 const postsRouter = require('./routes/api/newsPosts');
@@ -12,6 +13,7 @@ const app = express();
 
 
 //Bodyparser Middleware
+app.use(cors());
 app.use(express.json());
 
 // DB Config
