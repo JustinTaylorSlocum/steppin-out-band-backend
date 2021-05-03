@@ -14,7 +14,10 @@ const app = express();
 
 
 //Bodyparser Middleware
-app.use(cors());
+app.use(cors({
+    credentials:true,
+    origin: ['http://localhost:8000/gigs']
+  }));
 app.use(express.json());
 
 // DB Config

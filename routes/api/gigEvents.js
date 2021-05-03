@@ -27,7 +27,7 @@ router.get('/getgig/:id', (req, res) => {
 // @access  Public
 router.post('/creategig', (req, res) => {
   console.log("REQUEST DATA");
-  console.log(req);
+  console.log(req.body);
   const newGigEvent = new GigEvent({
     name: req.body.name,
     description: req.body.description,
@@ -37,6 +37,7 @@ router.post('/creategig', (req, res) => {
     city: req.body.city,
     state: req.body.state,
     day: req.body.day,
+    month: req.body.month,
     year: req.body.year
 });
 newGigEvent.save().then(gigEvent => res.json(gigEvent));
