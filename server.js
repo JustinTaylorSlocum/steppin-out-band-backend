@@ -1,34 +1,34 @@
 const express = require('express');
-const app = express();
-const mysql = require('mysql');
-// Middleware
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 // Routers
-const postsRouter = require('./routes/newsPosts');
-const gigsRouter = require('./routes/gigEvents');
-const { debug } = require('console');
+const postsRouter = require('./routes/api/newsPosts');
+const gigsRouter = require('./routes/api/gigEvents');
 
-// Connect/Setup Database
-const db = mysql.createConnection({
-    host    : '162.241.252.119',
-    user    : 'steppjb8_jslocum0001',
-    password: 'paper7',
-    database: 'steppjb8_steppin-out-data',
-    port    :  3306
-});
+//PORT
+const PORT = process.env.PORT || 5000;
 
-// use the modules
-app.use(cors());
-app.use(bodyParser.json())
-app.use(express.json())
-app.use(express.urlencoded({extended: true})) // parsing incoming requests with urlencoded based body-parser
+const app = express();
 
-// use router
-app.use('/posts', postsRouter);
-app.use('/gigs', gigsRouter);
 
-app.listen(4000, () => {
-    console.log("Server started on port 4000");
+//Bodyparser Middleware
+app.use(express.json());
+
+// DB Config
+const db = require('./config/keys').mongoURI;
+
+
+//Connect to Mongo
+mongoose
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
+
+//Use Routes
+app.use('/api/newsPosts', postsRouter);
+app.use('/api/gigEvents', gigsRouter);
+
+
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}.`);
 });
