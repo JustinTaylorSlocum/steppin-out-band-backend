@@ -25,7 +25,6 @@ router.get('/getgig/:id', (req, res) => {
 // @route   POST routes/gigEvents
 // @desc    Create a GigEvent
 // @access  Public
-
 router.post('/creategig', (req, res) => {
   const newGigEvent = new GigEvent({
     name: req.body.name,
